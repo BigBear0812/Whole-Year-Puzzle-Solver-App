@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">WholeYearPuzzleSolver</string>
+    <string name="title_activity_main">WholeYearPuzzleSolver</string>
+    <string name="package_name">com.bigbear0812.wholeyearpuzzlesolver</string>
+    <string name="custom_url_scheme">com.bigbear0812.wholeyearpuzzlesolver</string>
+</resources>

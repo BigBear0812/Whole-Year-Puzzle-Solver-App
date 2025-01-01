@@ -1,0 +1,10 @@
+{
+  "appId": "com.bigbear0812.wholeyearpuzzlesolver",
+  "appName": "WholeYearPuzzleSolver",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
