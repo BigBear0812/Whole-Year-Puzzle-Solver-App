@@ -1,5 +1,5 @@
 import { SplashScreen } from "@capacitor/splash-screen";
-import { Camera } from "@capacitor/camera";
+import { Solver } from '../../WholeYearPuzzleSolver/src/solver';
 
 window.customElements.define(
   "solver-interface",
@@ -79,8 +79,20 @@ window.customElements.define(
                       <option value="31">31</option>
                     </select>
                   </div>
-                  <button type="submit" id="solve" class="btn btn-primary">Solve</button>
+                  <button type="button" id="solve" class="btn btn-primary">Solve</button>
                 </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div id="loader" class="spinner-border text-light d-none" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <pre id="output"></pre>
               </div>
             </div>
           </main>
@@ -93,22 +105,18 @@ window.customElements.define(
       const self = this;
 
       self.shadowRoot
-        .querySelector("#take-photo")
-        .addEventListener("click", async function (e) {
-          try {
-            const photo = await Camera.getPhoto({
-              resultType: "uri",
-            });
+        .querySelector("#solve")
+        .addEventListener("click", (e) => {
+          const month = self.shadowRoot.querySelector("#month").value;
+          const day = parseInt(self.shadowRoot.querySelector("#day").value);
+          const loader = self.shadowRoot.querySelector("#loader");
+          loader.classList.remove("d-none");
 
-            const image = self.shadowRoot.querySelector("#image");
-            if (!image) {
-              return;
-            }
-
-            image.src = photo.webPath;
-          } catch (e) {
-            console.warn("User cancelled", e);
-          }
+          const solver = new Solver(month, day);
+          solver.findSolutions();
+          loader.classList.add("d-none");     
+          let output = solver.createSolutionOutput();
+          self.shadowRoot.querySelector("#output").textContent = output;
         });
     }
   }
