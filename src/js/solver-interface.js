@@ -16,14 +16,14 @@ window.customElements.define(
         <div class="container-fluid">
           <div class="row bg-primary text-light">
             <div class="col">
-              <h1 class="text-center">Capacitor</h1>
+              <h1 class="text-center">The Whole Year Puzzle Solver</h1>
             </div>
           </div>
           <main>
             <div class="row">
               <div class="col">
                 <p>
-                  Solve for The Whole Year Puzzle for the specific date
+                  Solve for The Whole Year Puzzle for a specific date
                 </p>
                 <form>
                   <div class="mb-3">
@@ -84,15 +84,15 @@ window.customElements.define(
               </div>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col mt-2">
                 <div id="loader" class="spinner-border text-light d-none" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col">
-                <pre id="output"></pre>
+              <div class="col mt-2">
+                <pre id="output" class="d-none" style="line-height: initial"></pre>
               </div>
             </div>
           </main>
@@ -106,17 +106,24 @@ window.customElements.define(
 
       self.shadowRoot
         .querySelector("#solve")
-        .addEventListener("click", (e) => {
-          const month = self.shadowRoot.querySelector("#month").value;
-          const day = parseInt(self.shadowRoot.querySelector("#day").value);
+        .addEventListener("click", async (e) => {
+          const output = self.shadowRoot.querySelector("#output");
           const loader = self.shadowRoot.querySelector("#loader");
+          output.classList.add("d-none");
           loader.classList.remove("d-none");
+          output.innerHTML = '';
 
-          const solver = new Solver(month, day);
-          solver.findSolutions();
-          loader.classList.add("d-none");     
-          let output = solver.createSolutionOutput();
-          self.shadowRoot.querySelector("#output").textContent = output;
+          setTimeout(() => {
+            let month = self.shadowRoot.querySelector("#month").value;
+            let day = parseInt(self.shadowRoot.querySelector("#day").value);
+            let solver = new Solver(month, day);
+            solver.findSolutions();
+            let outputHtml = solver.createSolutionOutput(true);
+            output.innerHTML = outputHtml;
+            
+            loader.classList.add("d-none");     
+            output.classList.remove("d-none");
+          }, 100);
         });
     }
   }
