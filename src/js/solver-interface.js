@@ -12,7 +12,6 @@ window.customElements.define(
       const root = this.attachShadow({ mode: "open" });
 
       root.innerHTML = `
-        <link rel="stylesheet" href="./css/bootstrap.min.css" />
         <div class="container-fluid">
           <div class="row bg-primary text-light">
             <div class="col">
@@ -97,7 +96,6 @@ window.customElements.define(
             </div>
           </main>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
       `;
     }
 
@@ -125,6 +123,12 @@ window.customElements.define(
             output.classList.remove("d-none");
           }, 100);
         });
+
+      let bootstrapURL = document.querySelector('head>link[rel="stylesheet"]').getAttribute('href');
+      let link = document.createElement('link', { rel: 'stylesheet', href: bootstrapURL });
+      link.rel = 'stylesheet';
+      link.href = bootstrapURL;
+      self.shadowRoot.append(link);
     }
   }
 );
